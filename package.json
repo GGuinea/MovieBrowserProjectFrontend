@@ -13,6 +13,7 @@
     "react-router-dom": "^0.0.0-experimental-compat.1",
     "react-scripts": "5.0.0",
     "style-components": "^0.1.0",
+    "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -38,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2",
+    "typescript-styled-plugin": "^0.18.2"
   }
 }
