@@ -5,7 +5,7 @@ import {Wrapper, Content } from './Header.styles';
 const Header = () => (
     <Wrapper>
         <Content>
-            Hello there
+            Simple movie app
         </Content>
     </Wrapper>
 );
