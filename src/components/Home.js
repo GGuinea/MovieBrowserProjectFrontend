@@ -10,14 +10,15 @@ import HeroImage from './HeroImage';
 import Spinner from './Spinner';
 import SearchBar from './SearchBar';
 import Thumb from './Thumb';
+import Button from './Button';
 
 
 const Home = () => {
-    const {state, loading, error, setSearchTerm} = useMoveFetch();
+    const {state, loading, error, searchTerm, setSearchTerm} = useMoveFetch();
     console.log(state);
     return (
       <>
-        {state.results[0] ? (
+        {!searchTerm && state.results[0] ? (
           <HeroImage
             image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${state.results[0].backdrop_path}`}
             title={state.results[0].original_title}
@@ -25,7 +26,7 @@ const Home = () => {
           />
         ) : null}
         <SearchBar setSearchTerm={setSearchTerm}></SearchBar>
-        <Grid header="Popular Mobies">
+        <Grid header={searchTerm ? "Search result" : "Popular Movies"}>
           {state.results.map((movie) => (
             <Thumb
               key={movie.id}
@@ -39,7 +40,10 @@ const Home = () => {
             ></Thumb>
           ))}
         </Grid>
-        <Spinner></Spinner>
+        {loading && <Spinner/>}
+        {state.page < state.total_pages && !loading && (
+            <Button text ="Load more"/>
+        )}
       </>
     );
 };
