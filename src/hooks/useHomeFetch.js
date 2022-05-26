@@ -23,7 +23,7 @@ export const useMoveFetch = () => {
       const movies = await apiSettings.fetchMovies(searchTerm, page);
       setState((prev) => ({
         ...movies,
-        results:
+          results:
           page > 1 ? [...prev.results, ...movies.results] : [...movies.results],
       }));
     } catch (error) {
