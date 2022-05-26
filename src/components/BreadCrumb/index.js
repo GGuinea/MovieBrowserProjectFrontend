@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import {Wrapper, Content} from './BreadCrumb.styles'
 
-const BreadCrumb = ({ movieTitle }) => {
+const BreadCrumb = ({ movieTitle }) => (
   <Wrapper>
     <Content>
       <Link to="/">
@@ -11,7 +11,7 @@ const BreadCrumb = ({ movieTitle }) => {
       <span>|</span>
       <span>{movieTitle}</span>
     </Content>
-  </Wrapper>;
-};
+  </Wrapper>
+);
 
 export default BreadCrumb;

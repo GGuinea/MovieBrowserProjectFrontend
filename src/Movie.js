@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { IMAGE_BASE_URL, POSTER_SIZE } from "./config";
 import { useMovieFetch } from "./hooks/useMovieFetch";
 import React from "react";
+import MovieInfo from "./components/MovieInfo";
 import BreadCrumb from "./components/BreadCrumb";
 
 const Movie = () => {
@@ -15,6 +16,7 @@ const Movie = () => {
   return (
     <>
       <BreadCrumb movieTitle={movie.original_title}></BreadCrumb>
+      <MovieInfo movie={movie}></MovieInfo>
     </>
   );
 };
