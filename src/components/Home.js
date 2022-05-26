@@ -14,8 +14,16 @@ import Button from './Button';
 
 
 const Home = () => {
-    const {state, loading, error, searchTerm, setSearchTerm} = useMoveFetch();
+    const {
+      state,
+      loading,
+      error,
+      searchTerm,
+      setSearchTerm,
+      setIsLoadingMore,
+    } = useMoveFetch();
     console.log(state);
+    if(error) return <div>Something go wrong</div>
     return (
       <>
         {!searchTerm && state.results[0] ? (
@@ -42,7 +50,7 @@ const Home = () => {
         </Grid>
         {loading && <Spinner/>}
         {state.page < state.total_pages && !loading && (
-            <Button text ="Load more"/>
+            <Button text ="Load more" callback={() => setIsLoadingMore(true)}/>
         )}
       </>
     );
