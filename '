@@ -1,0 +1,42 @@
+import React, { useState, useContext } from "react";
+
+import { useNavigate } from "react-router-dom";
+
+import API from "../API";
+import Button from "./Button";
+
+import { Wrapper } from "./Login.styles";
+
+import { Context } from "../context";
+
+const Login = () => {
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  const [_user, setUser] = useContext(Context);
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {};
+  const handleInput = (e) => {};
+  return (
+    <Wrapper>
+      <label>User: </label>
+      <input
+        type="text"
+        value="state falue"
+        name="username"
+        onChange={handleInput}
+      ></input>
+      <input
+        type="password"
+        value="state value"
+        name="password"
+        onChange={handleInput}
+      ></input>
+      <Button text="Login" callback={handleSubmit}></Button>
+    </Wrapper>
+  );
+};
+
+export default Login;

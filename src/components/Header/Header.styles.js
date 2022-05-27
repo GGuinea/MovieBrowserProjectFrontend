@@ -6,17 +6,20 @@ padding: 0 20px;
 `;
 
 export const Content = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-between;
-max-width: var(--maxWidth);
-padding: 20px 0;
-margin: 0 auto;
-color: white;
-font-size: var(--fontSuperBig);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--maxWidth);
+  padding: 20px 0;
+  margin: 0 auto;
+  color: white;
+  font-size: var(--fontSuperBig);
+  a {
+    color: var(--white);
+    text-decoration: none;
+  }
 `;
 
 export const LogoImg = styled.img``;
 
-export const TMDBLogoImg = styled.img`
-`;
+export const TMDBLogoImg = styled.img``;
