@@ -14,30 +14,46 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [object, setObject] = useState();
 
   const [_user, setUser] = useContext(Context);
   var myHeaders = new Headers();
   myHeaders.append("Access-Control-Allow-Origin", "*");
-myHeaders.append("Content-type", "application/json");
+  myHeaders.append("Content-type", "application/json");
   var requestOptions = {
     method: "POST",
     headers: myHeaders,
-    body: JSON.stringify({ id: 0, name: username, password: password }),
+    body: JSON.stringify({ name: username, password: password }),
   };
   const navigate = useNavigate();
+  console.log(requestOptions.body);
   const loginUser = async () => {
+    setError(false);
     await fetch("http://localhost:8080/user/login", requestOptions)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
+        if (json.hasOwnProperty("admin")) {
+            setUser({username: json.name})
+          return;
+        }
+        if (json[0].body !== "OK") {
+          alert(json[0].body);
+        }
+        setObject(json);
       })
       .catch((err) => {
+        alert(err);
         console.log(err);
         setError(true);
       });
   };
 
   const handleSubmit = async () => {
+      if(username.length < 7) {
+          alert("Username: min 7 characters");
+          return;
+      }
     setError(false);
     try {
       const data = await loginUser(username, password);

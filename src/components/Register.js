@@ -15,25 +15,59 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
 
+  var myHeaders = new Headers();
+  myHeaders.append("Access-Control-Allow-Origin", "*");
+  myHeaders.append("Content-type", "application/json");
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify({ name: username, password: password, email: email }),
+  };
   const [_user, setUser] = useContext(Context);
   const navigate = useNavigate();
 
-    const handleSubmit = async () => {
-        setError(false);
-        try {
-            const requestToken = await API.getRequestToken();
-            const sessionId = await API.authenticate(
-              requestToken,
-              username,
-              password
-            );
-            console.log(sessionId)
-            setUser({sessionId: sessionId.session_id, username})
-            navigate('/');
-        } catch(error) {
-            setError(true);
+  const registerUser = async () => {
+    setError(false);
+    await fetch("http://localhost:8080/user/register", requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        if (json.hasOwnProperty("admin")) {
+            setUser({username: json.name})
+          return;
         }
-    };
+        if (json[0].body !== "OK") {
+          alert(json[0].body);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+        console.log(err);
+        setError(true);
+      });
+  };
+  const handleSubmit = async () => {
+      if(username.length < 7) {
+          alert("Username: min 7 characters");
+          return;
+      }
+      if(password.length < 7) {
+          alert("Password: to weak");
+          return;
+      }
+      if(!email.includes("@") || email.length < 10) {
+          alert("EMAIL: wrong!");
+          return;
+      }
+    setError(false);
+    try {
+      const data = await registerUser(username, password, email);
+      navigate("/register");
+    } catch (error) {
+      setError(true);
+    }
+  };
+    
   const handleInput = (e) => {
     const name = e.currentTarget.name;
     const value = e.currentTarget.value;
