@@ -34,7 +34,7 @@ const Login = () => {
       .then((json) => {
         console.log(json);
         if (json.hasOwnProperty("admin")) {
-            setUser({username: json.name})
+            setUser({username: json.name, id: json.id, favorit: json.favoriteMovies, admin: json.admin})
           return;
         }
         if (json[0].body !== "OK") {
@@ -50,10 +50,6 @@ const Login = () => {
   };
 
   const handleSubmit = async () => {
-      if(username.length < 7) {
-          alert("Username: min 7 characters");
-          return;
-      }
     setError(false);
     try {
       const data = await loginUser(username, password);

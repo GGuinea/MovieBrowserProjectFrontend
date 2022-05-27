@@ -9,6 +9,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 
 import UserProvider from "./context";
+import UserInfo from "./components/UserInfo";
+import Admin from "./components/Admin";
 
 const App = () => (
   <Router>
@@ -19,6 +21,8 @@ const App = () => (
         <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register/>} />
         <Route path="/:movieId" element={<Movie />} />
+        <Route path="/user/:userId" element={<UserInfo/>} />
+            <Route path="/admin" element={<Admin/>} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <GlobalStyle />

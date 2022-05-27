@@ -15,7 +15,20 @@ const Header = () => {
           Simple movie app
         </Link>
         {user ? (
-          <span className="loggedin">Logged in as: {user.username}</span>
+          <span>
+            <Link to={`/user/${user.id}`}>
+              <Button text={user.username}></Button>
+            </Link>
+        {user.admin ? (
+          <span>
+            <Link to={"/admin"}>
+              <Button text="dashboard"></Button>
+            </Link>
+          </span>
+        ) : (
+          <span></span>
+        )}
+          </span>
         ) : (
           <Link to="/login">
             <Button text="Log In"></Button>

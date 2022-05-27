@@ -8,7 +8,36 @@ import Button from "../Button/";
 import { Context } from "../../context";
 
 const MovieInfo = ({ movie }) => {
-  const [user] = useContext(Context);
+  const [user, setUser] = useContext(Context);
+  var myHeaders = new Headers();
+  myHeaders.append("Access-Control-Allow-Origin", "*");
+  myHeaders.append("Content-type", "application/json");
+  console.log(movie);
+  const loginUser = async () => {
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify({externalId: movie.id, name: movie.original_title, userId: user.id})
+  };
+  console.log(requestOptions.body);
+      var str = "http://localhost:8080/user/favorite";
+    await fetch(str, requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+            setUser({username: user.username, id: user.id, favorit: json, admin: user.admin})
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const data = await loginUser(movie.id);
+    } catch (error) {
+    }
+  };
   return (
     <Wrapper backdrop={movie.backdrop_path}>
       <Content>
@@ -33,7 +62,7 @@ const MovieInfo = ({ movie }) => {
             </div>
             <div className="director">
               {user ? (
-                <Button text="Add to favorite"></Button>
+                <Button text="Add to favorite" callback={handleSubmit}></Button>
               ) : (
                 <Link to="/login">
                   <Button text="Log In"></Button>

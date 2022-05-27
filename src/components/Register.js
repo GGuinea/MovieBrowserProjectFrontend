@@ -33,11 +33,12 @@ const Register = () => {
       .then((json) => {
         console.log(json);
         if (json.hasOwnProperty("admin")) {
-            setUser({username: json.name})
+            navigate("/login");
           return;
         }
         if (json[0].body !== "OK") {
           alert(json[0].body);
+            navigate("/register");
         }
       })
       .catch((err) => {
@@ -62,7 +63,6 @@ const Register = () => {
     setError(false);
     try {
       const data = await registerUser(username, password, email);
-      navigate("/register");
     } catch (error) {
       setError(true);
     }
