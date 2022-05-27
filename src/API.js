@@ -35,6 +35,10 @@ const apiSettings = {
     const reqToken = await (await fetch(REQUEST_TOKEN_URL)).json();
     return reqToken.request_token;
   },
+    internal_test: async() => {
+        const data = await fetch("localhost:8080/test");
+        return data;
+    },
   authenticate: async (requestToken, username, password) => {
     const bodyData = {
       username,

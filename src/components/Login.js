@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import API  from "../API";
+import API from "../API";
 import Button from "./Button";
 
 import { Wrapper } from "./Login.styles";
@@ -16,24 +16,36 @@ const Login = () => {
   const [error, setError] = useState(false);
 
   const [_user, setUser] = useContext(Context);
+  var myHeaders = new Headers();
+  myHeaders.append("Access-Control-Allow-Origin", "*");
+myHeaders.append("Content-type", "application/json");
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: JSON.stringify({ id: 0, name: username, password: password }),
+  };
   const navigate = useNavigate();
+  const loginUser = async () => {
+    await fetch("http://localhost:8080/user/login", requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(true);
+      });
+  };
 
-    const handleSubmit = async () => {
-        setError(false);
-        try {
-            const requestToken = await API.getRequestToken();
-            const sessionId = await API.authenticate(
-              requestToken,
-              username,
-              password
-            );
-            console.log(sessionId)
-            setUser({sessionId: sessionId.session_id, username})
-            navigate('/');
-        } catch(error) {
-            setError(true);
-        }
-    };
+  const handleSubmit = async () => {
+    setError(false);
+    try {
+      const data = await loginUser(username, password);
+      navigate("/");
+    } catch (error) {
+      setError(true);
+    }
+  };
   const handleInput = (e) => {
     const name = e.currentTarget.name;
     const value = e.currentTarget.value;
